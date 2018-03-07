@@ -1,8 +1,9 @@
-package eclipse;
 
+　
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.sql.Time;
 import java.util.Random;
 
 import org.openqa.selenium.*;
@@ -15,17 +16,31 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class EclipseVoterDalaran {
 	public static void main(String[] args) throws InterruptedException{
 		Random rand = new Random();
-		int sleep = rand.nextInt(10)+1;
-		Thread.sleep(sleep*1000);
-		vote("lukesmith02","123smith94");
-		
-		sleep = rand.nextInt(100)+1;
-		Thread.sleep(sleep*1000);
-		vote("lukensmith02","123smith94");
-		
-		sleep = rand.nextInt(100)+1;
-		Thread.sleep(sleep*1000);
-		vote("kanyeqt","gtfoffs33");
+		long timeLastVotedPlus12h=0;
+		long curTime=0;
+		while (true){
+			Thread.sleep(18000 + rand.nextInt(18000)); //sleep 5 mins + random 0-5 mins
+			curTime=System.currentTimeMillis() / 1000;
+			if(curTime - timeLastVotedPlus12h > 0){
+				
+				////////////////////////////////////////////
+				int sleep = rand.nextInt(10)+1;
+				Thread.sleep(sleep*1000);
+				vote("username","pass");
+				
+				sleep = rand.nextInt(100)+1;
+				Thread.sleep(sleep*1000);
+				vote("username","pass");
+				
+				sleep = rand.nextInt(100)+1;
+				Thread.sleep(sleep*1000);
+				vote("username","pass");
+				///////////////////////////////////////////
+				
+				
+				timeLastVotedPlus12h=(System.currentTimeMillis() / 1000) + (12*3600) + rand.nextInt(9000) + rand.nextInt(9000);
+			}
+		}
 	}
 	
 	
