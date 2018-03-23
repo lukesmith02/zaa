@@ -1,0 +1,87 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.XPath;
+
+namespace Utilities
+{
+    public class Utilities
+    {
+
+        public static string XPathNavigator(string path, string node)
+        {
+            try
+            {
+                XPathNavigator nav;
+                XPathDocument docNav;
+                string xPath;
+                docNav = new XPathDocument(path);
+                nav = docNav.CreateNavigator();
+                xPath = "//ConfigFile/" + node;
+                string value = nav.SelectSingleNode(xPath).Value;
+
+                Console.WriteLine(value);
+                Console.WriteLine();
+                Console.ReadLine();
+
+                return value;
+            }
+            catch (NullReferenceException e)
+            {
+                throw new NullReferenceException("Unable to find any object at the XPath: " + node);
+            }
+            catch (FileNotFoundException e)
+            {
+                throw new FileNotFoundException("Unable to find file: " + path);
+            }
+            catch (DirectoryNotFoundException e)
+            {
+                throw new FileNotFoundException("Unable to find file: " + path);
+            }
+            catch (IOException e)
+            {
+                throw new FileNotFoundException("You probably have the file open :)");
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Unknown Exception");
+            }
+
+        }
+
+        public static void LogToFile(string path, string RobotName, string TaskName, string Activity, string Description)
+        {
+            try
+            {
+                using (var w = new StreamWriter(path))
+                {
+                    var line = string.Format("{0},{1},{2},{3}", RobotName, TaskName, Activity, Description);
+                    w.WriteLine(line);
+                    w.Flush();
+                }
+            }
+            catch (DirectoryNotFoundException e)
+            {
+                throw new FileNotFoundException("Unable to find file: " + path);
+            }
+            catch (FileNotFoundException e)
+            {
+                throw new FileNotFoundException("Unable to find file: " + path);
+            }
+            catch (IOException e)
+            {
+                throw new FileNotFoundException("You probably have the file open :)");
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Unknown Exception");
+            }
+
+        }
+    }
+}
